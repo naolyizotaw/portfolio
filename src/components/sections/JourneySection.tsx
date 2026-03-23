@@ -1,99 +1,103 @@
 import { motion } from 'framer-motion'
 import { useInView } from '@/hooks/useInView'
+import { Check, Circle } from 'lucide-react'
 
-const timelineData = [
+interface JourneyEntry {
+  role: string
+  org: string
+  period: string
+  description: string
+  completed: boolean
+}
+
+const journeyLeft: JourneyEntry[] = [
   {
-    year: '2021',
-    title: 'Started University',
-    subtitle: 'Addis Ababa Institute of Technology',
-    description:
-      'Began dual studies in Software Engineering and Mechanical Engineering, laying the foundation for a career at the intersection of digital and physical systems.',
+    role: 'Lead Developer',
+    org: 'Full-Stack Projects',
+    period: '2024 – Present',
+    description: 'Building enterprise-level MERN applications with real-time communication, predictive analytics, and complex database architectures.',
+    completed: true,
   },
   {
-    year: '2022',
-    title: 'First Full-Stack Projects',
-    subtitle: 'Academic & Personal',
-    description:
-      'Built early MERN stack applications and started learning SolidWorks for mechanical design. Led technical sessions within the university community.',
-  },
-  {
-    year: '2023',
-    title: 'Expanding the Stack',
-    subtitle: 'Freelance & Open Source',
-    description:
-      'Developed production-grade web apps with real-time features, complex database schemas, and predictive analytics. Deepened CAD skills with CATIA and FEA simulations.',
-  },
-  {
-    year: '2024',
-    title: 'Community Leadership',
-    subtitle: 'Tech Communities & Teaching',
-    description:
-      'Led technical workshops, contributed to open source, and created educational content. Built projects combining IoT sensor data with web dashboards.',
-  },
-  {
-    year: '2025-Present',
-    title: 'Full-Stack + Mechanical Design',
-    subtitle: 'Professional Growth',
-    description:
-      'Focusing on enterprise-level MERN applications, advanced FEA/thermal analysis, and bridging the gap between software architecture and physical engineering.',
+    role: 'Software Engineering Student',
+    org: 'AAiT, Addis Ababa University',
+    period: '2021 – Present',
+    description: 'Studying software architecture, algorithms, and systems design. Leading technical workshops and contributing to open source communities.',
+    completed: false,
   },
 ]
 
+const journeyRight: JourneyEntry[] = [
+  {
+    role: 'Design Engineer',
+    org: 'Mechanical Design & Simulation',
+    period: '2023 – Present',
+    description: 'Creating 3D assemblies, running FEA simulations, and performing thermal/stress analysis for mechanical components in SolidWorks and CATIA.',
+    completed: true,
+  },
+  {
+    role: 'Mechanical Engineering Student',
+    org: 'AAiT, Addis Ababa University',
+    period: '2021 – Present',
+    description: 'Studying thermodynamics, fluid mechanics, material science, and machine design. Applying theory to real-world CAD projects.',
+    completed: false,
+  },
+]
+
+function JourneyCard({ entry, index, isInView, side }: { entry: JourneyEntry; index: number; isInView: boolean; side: 'left' | 'right' }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: side === 'left' ? -30 : 30 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.2 + index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+      className="flex gap-4"
+    >
+      <div className="pt-1.5 shrink-0">
+        {entry.completed ? (
+          <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+            <Check size={13} className="text-on-primary" strokeWidth={2.5} />
+          </div>
+        ) : (
+          <div className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center">
+            <Circle size={8} className="text-outline-variant" />
+          </div>
+        )}
+      </div>
+      <div className="pb-8">
+        <h4 className="text-[0.9375rem] font-semibold text-on-surface mb-0.5">{entry.role}</h4>
+        <p className="text-xs text-on-surface-muted mb-1">{entry.org}</p>
+        <p className="label text-on-surface-muted mb-2">{entry.period}</p>
+        <p className="body-md">{entry.description}</p>
+      </div>
+    </motion.div>
+  )
+}
+
 export function JourneySection() {
-  const { ref, isInView } = useInView<HTMLElement>({ threshold: 0.1 })
+  const { ref, isInView } = useInView<HTMLElement>({ threshold: 0.05 })
 
   return (
-    <section id="journey" ref={ref} className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="journey" ref={ref} className="py-24 lg:py-32 px-6 lg:px-8 bg-surface-container-low">
+      <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
         >
-          <h2 className="section-title text-white">Journey</h2>
-          <p className="mt-6 text-white/50 max-w-2xl">
-            From curiosity-driven experiments to engineering production systems —
-            my path has been defined by the drive to bridge software and hardware.
-          </p>
+          <p className="label mb-3">Experience</p>
+          <h2 className="display-sm">The Professional Journey</h2>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 timeline-line" />
-
-          <div className="space-y-12">
-            {timelineData.map((item, index) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className={`relative flex flex-col md:flex-row items-start gap-8 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-              >
-                {/* Content card */}
-                <div className={`flex-1 pl-12 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                  <div className="glass-card p-6">
-                    <span className="inline-block text-xs font-bold tracking-wider text-[#00c6ff] mb-2">
-                      {item.year}
-                    </span>
-                    <h3 className="text-lg font-semibold text-white mb-1">{item.title}</h3>
-                    <p className="text-sm text-[#00c6ff]/60 mb-3">{item.subtitle}</p>
-                    <p className="text-sm text-white/50 leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-
-                {/* Timeline dot */}
-                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-6">
-                  <div className="timeline-dot" />
-                </div>
-
-                {/* Spacer for opposite side */}
-                <div className="hidden md:block flex-1" />
-              </motion.div>
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+          <div className="space-y-0">
+            {journeyLeft.map((entry, i) => (
+              <JourneyCard key={entry.role} entry={entry} index={i} isInView={isInView} side="left" />
+            ))}
+          </div>
+          <div className="space-y-0">
+            {journeyRight.map((entry, i) => (
+              <JourneyCard key={entry.role} entry={entry} index={i} isInView={isInView} side="right" />
             ))}
           </div>
         </div>
