@@ -40,10 +40,10 @@ export function Navbar() {
           isScrolled ? 'glass-nav shadow-ambient-sm' : 'bg-transparent'
         )}
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 h-14 flex items-center justify-between">
+        <div className="w-full px-8 md:px-12 lg:px-20 xl:px-28 h-16 flex items-center justify-between">
           <button
             onClick={() => scrollTo('hero')}
-            className="text-[0.9375rem] font-bold tracking-tight text-on-surface hover:text-primary transition-colors cursor-pointer"
+            className="text-[1rem] font-bold tracking-tight text-on-surface hover:text-primary transition-colors cursor-pointer"
           >
             NAOL YIZOTAW
           </button>

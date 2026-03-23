@@ -1,74 +1,103 @@
 import { motion } from 'framer-motion'
 import { useInView } from '@/hooks/useInView'
-import { Check, Circle } from 'lucide-react'
+import { Briefcase, GraduationCap, Heart, Code2, Wrench, Users } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 interface JourneyEntry {
   role: string
   org: string
   period: string
   description: string
-  completed: boolean
+  icon: LucideIcon
 }
 
-const journeyLeft: JourneyEntry[] = [
+const journeyEntries: JourneyEntry[] = [
   {
-    role: 'Lead Developer',
-    org: 'Full-Stack Projects',
-    period: '2024 – Present',
-    description: 'Building enterprise-level MERN applications with real-time communication, predictive analytics, and complex database architectures.',
-    completed: true,
+    role: 'Technical Lead',
+    org: 'GDG Hilcoe',
+    period: '2026 – Present',
+    description: 'Organizing technical events and hackathons. Leading peer learning sessions and contributing to open-source and innovation-driven projects.',
+    icon: Code2,
   },
   {
     role: 'Software Engineering Student',
-    org: 'AAiT, Addis Ababa University',
-    period: '2021 – Present',
-    description: 'Studying software architecture, algorithms, and systems design. Leading technical workshops and contributing to open source communities.',
-    completed: false,
-  },
-]
-
-const journeyRight: JourneyEntry[] = [
-  {
-    role: 'Design Engineer',
-    org: 'Mechanical Design & Simulation',
-    period: '2023 – Present',
-    description: 'Creating 3D assemblies, running FEA simulations, and performing thermal/stress analysis for mechanical components in SolidWorks and CATIA.',
-    completed: true,
+    org: 'Hilcoe School of CS & Technology',
+    period: '2025 – Present',
+    description: 'Second-year student building full-stack MERN applications, studying software architecture, algorithms, and systems design.',
+    icon: GraduationCap,
   },
   {
     role: 'Mechanical Engineering Student',
-    org: 'AAiT, Addis Ababa University',
-    period: '2021 – Present',
-    description: 'Studying thermodynamics, fluid mechanics, material science, and machine design. Applying theory to real-world CAD projects.',
-    completed: false,
+    org: 'Addis Ababa University',
+    period: '2024 – 2028',
+    description: 'Third-year student studying thermodynamics, fluid mechanics, material science, and machine design. Applying theory to real-world CAD and FEA projects.',
+    icon: Wrench,
+  },
+  {
+    role: 'Backend Development Trainee',
+    org: 'ALX Ethiopia',
+    period: '2024',
+    description: 'Completed intensive 6-month backend development training focused on Django, REST APIs, and database design with hands-on project delivery.',
+    icon: Briefcase,
+  },
+  {
+    role: 'Volunteer',
+    org: 'Nehemiah Autism Center',
+    period: '2023 – 2024',
+    description: 'Supported the care and integration of individuals with autism into the community. Advocated for inclusive practices and disability awareness.',
+    icon: Heart,
+  },
+  {
+    role: 'Youth Leader',
+    org: 'Kerabu Full Gospel Church',
+    period: '2021 – 2023',
+    description: 'Organized workshops and leadership training sessions to foster personal and career development among youth. Promoted cross-cultural dialogue.',
+    icon: Users,
   },
 ]
 
-function JourneyCard({ entry, index, isInView, side }: { entry: JourneyEntry; index: number; isInView: boolean; side: 'left' | 'right' }) {
+function TimelineRow({ entry, index, isInView }: { entry: JourneyEntry; index: number; isInView: boolean }) {
+  const isEven = index % 2 === 0
+
   return (
     <motion.div
-      initial={{ opacity: 0, x: side === 'left' ? -30 : 30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.2 + index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      className="flex gap-4"
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.15 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      className="grid grid-cols-[1fr_auto_1fr] gap-6 lg:gap-10 items-center"
     >
-      <div className="pt-1.5 shrink-0">
-        {entry.completed ? (
-          <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-            <Check size={13} className="text-on-primary" strokeWidth={2.5} />
-          </div>
-        ) : (
-          <div className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center">
-            <Circle size={8} className="text-outline-variant" />
-          </div>
-        )}
+      {/* Left cell */}
+      {isEven ? (
+        <div className="text-right pr-2">
+          <h4 className="text-[1.5rem] font-bold text-[#191c1e] tracking-[-0.02em]">{entry.role}</h4>
+          <p className="text-[0.9375rem] text-[#6b7280] mt-1">{entry.org}</p>
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl p-5 shadow-ambient-sm">
+          <p className="label text-primary mb-2">{entry.period}</p>
+          <p className="text-[0.9375rem] leading-[1.65] text-[#42474d]">{entry.description}</p>
+        </div>
+      )}
+
+      {/* Center icon */}
+      <div className="relative flex items-center justify-center">
+        <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center z-10">
+          <entry.icon className="w-5 h-5 text-white" strokeWidth={2} />
+        </div>
       </div>
-      <div className="pb-8">
-        <h4 className="text-[0.9375rem] font-semibold text-on-surface mb-0.5">{entry.role}</h4>
-        <p className="text-xs text-on-surface-muted mb-1">{entry.org}</p>
-        <p className="label text-on-surface-muted mb-2">{entry.period}</p>
-        <p className="body-md">{entry.description}</p>
-      </div>
+
+      {/* Right cell */}
+      {isEven ? (
+        <div className="bg-white rounded-xl p-5 shadow-ambient-sm">
+          <p className="label text-primary mb-2">{entry.period}</p>
+          <p className="text-[0.9375rem] leading-[1.65] text-[#42474d]">{entry.description}</p>
+        </div>
+      ) : (
+        <div className="text-left pl-2">
+          <h4 className="text-[1.5rem] font-bold text-[#191c1e] tracking-[-0.02em]">{entry.role}</h4>
+          <p className="text-[0.9375rem] text-[#6b7280] mt-1">{entry.org}</p>
+        </div>
+      )}
     </motion.div>
   )
 }
@@ -77,27 +106,26 @@ export function JourneySection() {
   const { ref, isInView } = useInView<HTMLElement>({ threshold: 0.05 })
 
   return (
-    <section id="journey" ref={ref} className="py-24 lg:py-32 px-6 lg:px-8 bg-surface-container-low">
-      <div className="max-w-6xl mx-auto">
+    <section id="journey" ref={ref} className="py-24 lg:py-32 px-8 md:px-12 lg:px-20 xl:px-28 bg-surface-container-low">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <p className="label mb-3">Experience</p>
-          <h2 className="display-sm">The Professional Journey</h2>
+          <h2 className="display-sm mb-4">The Professional Journey</h2>
+          <div className="w-12 h-[3px] bg-primary mx-auto rounded-full" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
-          <div className="space-y-0">
-            {journeyLeft.map((entry, i) => (
-              <JourneyCard key={entry.role} entry={entry} index={i} isInView={isInView} side="left" />
-            ))}
-          </div>
-          <div className="space-y-0">
-            {journeyRight.map((entry, i) => (
-              <JourneyCard key={entry.role} entry={entry} index={i} isInView={isInView} side="right" />
+        {/* Timeline */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Vertical center line */}
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-[#dfe2e6] hidden lg:block" />
+
+          <div className="space-y-10 lg:space-y-14">
+            {journeyEntries.map((entry, i) => (
+              <TimelineRow key={entry.role} entry={entry} index={i} isInView={isInView} />
             ))}
           </div>
         </div>

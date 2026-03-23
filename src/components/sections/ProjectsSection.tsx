@@ -81,8 +81,8 @@ export function ProjectsSection() {
   const filtered = activeFilter === 'all' ? projects : projects.filter(p => p.category === activeFilter)
 
   return (
-    <section id="projects" ref={ref} className="py-24 lg:py-32 px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" ref={ref} className="py-24 lg:py-32 px-8 md:px-12 lg:px-20 xl:px-28">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -104,11 +104,11 @@ export function ProjectsSection() {
           className="flex gap-2 mb-10"
         >
           {filters.map(f => (
-            <button
+                <button
               key={f.value}
               onClick={() => setActiveFilter(f.value)}
               className={cn(
-                'px-4 py-1.5 rounded-sm text-[0.8125rem] font-medium transition-all duration-200 cursor-pointer',
+                'px-5 py-2 rounded-sm text-[0.875rem] font-medium transition-all duration-200 cursor-pointer',
                 activeFilter === f.value
                   ? 'bg-primary text-on-primary'
                   : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
@@ -136,9 +136,9 @@ export function ProjectsSection() {
                 )}
               >
                 {/* Image placeholder area */}
-                <div className="relative h-44 bg-surface-container-low overflow-hidden">
+                <div className="relative h-44 bg-[#f0f2f5] overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <project.icon className="w-12 h-12 text-outline-variant/30" />
+                    <project.icon className="w-12 h-12 text-[#c4c7cc]/50" />
                   </div>
                   <div className="absolute top-3 left-3">
                     <span className="tag-badge">{project.tag}</span>
@@ -147,8 +147,8 @@ export function ProjectsSection() {
 
                 {/* Content */}
                 <div className="p-5">
-                  <h3 className="text-[0.9375rem] font-semibold text-on-surface mb-2">{project.title}</h3>
-                  <p className="text-[0.8125rem] text-on-surface-variant leading-relaxed mb-4">{project.description}</p>
+                  <h3 className="text-[1.125rem] font-semibold text-on-surface mb-2">{project.title}</h3>
+                  <p className="text-[0.9375rem] text-on-surface-variant leading-relaxed mb-4">{project.description}</p>
 
                   <div className="flex flex-wrap gap-1.5">
                     {project.tech.map(t => (

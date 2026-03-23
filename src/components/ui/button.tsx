@@ -14,10 +14,10 @@ const buttonVariants = cva(
         text: "btn-text",
       },
       size: {
-        default: "h-10 px-6",
-        sm: "h-9 px-4 text-xs",
-        lg: "h-11 px-8 text-[0.9375rem]",
-        icon: "h-10 w-10 rounded-lg",
+        default: "h-11 px-7 text-[0.9375rem]",
+        sm: "h-9 px-5 text-[0.8125rem]",
+        lg: "h-12 px-9 text-[1rem]",
+        icon: "h-11 w-11 rounded-lg",
       },
     },
     defaultVariants: {

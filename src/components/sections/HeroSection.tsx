@@ -8,7 +8,7 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden pt-14"
     >
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 w-full px-8 md:px-12 lg:px-20 xl:px-28 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left: Text — pushed asymmetrically into 7 cols */}
         <motion.div
           className="lg:col-span-7"
@@ -20,13 +20,13 @@ export function HeroSection() {
             Software Engineering &amp; Mechanical Design
           </p>
 
-          <h1 className="display-lg mb-6 max-w-[540px]">
+          <h1 className="display-lg mb-6 max-w-[620px]">
             Engineering{' '}
             <span className="gradient-text">Precision</span> In
             Every Pixel.
           </h1>
 
-          <p className="body-lg max-w-[480px] mb-8 text-on-surface-variant">
+          <p className="body-lg max-w-[540px] mb-8 text-on-surface-variant">
             Full-Stack Software Engineer & Mechanical Design Engineer.
             I build production-grade MERN applications and design physical
             systems with precision and purpose.
@@ -52,7 +52,7 @@ export function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="relative w-72 h-72">
+          <div className="relative w-80 h-80">
             {/* Geometric wireframe cube */}
             <svg viewBox="0 0 200 200" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Back face */}
